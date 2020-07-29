@@ -2,21 +2,18 @@
 #define __JOUEUR_H__
 
 #include "animateur.h"
+#include "objetanime.h"
 #include "scene.h"
 
-class Joueur {
+class Joueur : public ObjetAnime {
   private:
-	// Informations propres au joueur.
-    Animateur images;
-    sf::Sprite lutin;
-    int position_x;
-    int position_y;
-    int vitesse;
-    
+	int vitesse;
+  
     // Pointeur vers la scène dans laquelle évolue le joueur.
     Scene* la_scene;
+    
   public:
-    Joueur(Scene* une_scene) {
+    Joueur(Scene* une_scene, int x, int y) : ObjetAnime(x, y) {
 	  this->la_scene = une_scene;
 		
 	  // Initialisation des images d'animation
@@ -24,17 +21,8 @@ class Joueur {
       this->images.ajouterImage("sprites/sprite_b.png");
       this->images.ajouterImage("sprites/sprite_c.png");
       
-	  // Position de départ
-	  this->position_x = 50;
-	  this->position_y = 50;
-	  this->lutin.setPosition(this->position_x, this->position_y);
-	  
 	  // Nombre de pixels de déplacement du lutin.
 	  this->vitesse = 3;
-	}
-
-	sf::Sprite& getLutin() {
-	  return this->lutin;
 	}
 
 	void deplacerGauche() {

@@ -17,7 +17,7 @@ int main()
 {
   // Construction de la fenêtre.
   sf::RenderWindow window;
-  window.create(sf::VideoMode(400, 200), "Démonstration de SFML", sf::Style::Titlebar | sf::Style::Close);
+  window.create(sf::VideoMode(400, 200), "Demo SFML", sf::Style::Titlebar | sf::Style::Close);
 
   sf::Color white_background(255, 255, 255, 255);
   window.clear(white_background); 
@@ -25,8 +25,8 @@ int main()
   // Création de l'objet contenant le texte.
   sf::Font font;
   font.loadFromFile("fonts/Roman SD.ttf");
-  sf::Text text("SFML works!", font);
-  text.setCharacterSize(40);
+  sf::Text text("Utilisez les touches W-A-S-D pour jouer", font);
+  text.setCharacterSize(12);
   text.setFillColor(sf::Color::Black);
   text.setStyle(sf::Text::Bold);
   text.setPosition(0,0);
@@ -35,7 +35,7 @@ int main()
   Scene scene;
 
   // Création de l'objet joueur gérant les lutins et les déplacements.
-  Joueur joueur1(&scene);
+  Joueur joueur1(&scene, 50, 50);
 
   // Création du cercle.
   sf::CircleShape un_cercle(10);
@@ -99,6 +99,11 @@ int main()
 	if(a_pressed) joueur1.deplacerGauche();
 	if(s_pressed) joueur1.deplacerBas();
 	if(d_pressed) joueur1.deplacerDroite();
+
+	if (scene.getPoints() > 0) {
+	  std::string message = "Points : " + std::to_string(scene.getPoints()); 
+	  text.setString(message);
+	}
 
     // RAFRAICHISSEMENT DE LA SCÈNE
     // On efface le contenu de la scène.
