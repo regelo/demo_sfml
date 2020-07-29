@@ -6,13 +6,15 @@
 #include <list>
 #include <vector>
 
-#include "animateur.h"
 #include "etoile.h"
+#include "nuage.h"
 
 class Scene {
   private:
-    // Conteneur des obstacles. Les obstacles ne changent pas durant la vie du programme (pas d'ajouts, pas de retraits), donc un std::vector fait l'affaire.
+    // Conteneur des obstacles et des nuages. Les obstacles et les nuages ne changent pas durant la vie du programme (pas d'ajouts, pas de retraits), donc un std::vector fait l'affaire.
 	std::vector<sf::Sprite> obstacles;
+	std::vector<Nuage> nuages;
+	
 	// Conteneur des étoiles. Je veux pouvoir enlever des étoiles au milieu du conteneur et en ajouter à la fin sans problèmes, donc un std::list fait l'affaire.
     std::list<Etoile> etoiles;
 	
@@ -29,7 +31,7 @@ class Scene {
       // Initialisation du générateur de nombres aléatoires avec le temps actuel.
       srand(time(NULL));
       
-      // Création de trois obstacles à x=150, x=200, x=250 avec une valeur aléatoire entre 50 et 149 pour y.
+      // Création de trois obstacles à x=150, x=200, x=250 avec une valeur aléatoire entre 50 et 149 pour les y.
       for (int i=0 ; i<3 ; i++){
 	    int x = 150 + i*50;
 	    int y = 50 + rand()%100;
@@ -39,13 +41,25 @@ class Scene {
 	    this->obstacles.push_back(obstacle);
 	  }
 	  
-	  // Création de cinq étoiles à x=125, x=175, x=225, x=275 et x=325, avec une valeur aléatoire entre 50 et 149 pour y.
-	  for (int i=0 ; i<5 ; i++) {
-        int x = 125+i*50;
-        int y = 50+ rand()%100;
-	    Etoile etoile(x, y);
-	    etoiles.push_back(etoile);
-	  }
+	  // Création de cinq étoiles à x=18, x=82, x=118, x=282 et x=314, avec une valeur aléatoire entre 50 et 149 pour les y.
+	  Etoile etoile1(18, 50+rand()%100);
+	  this->etoiles.push_back(etoile1);
+	  Etoile etoile2(82, 50+rand()%100);
+	  this->etoiles.push_back(etoile2);
+	  Etoile etoile3(118, 50+rand()%100);
+	  this->etoiles.push_back(etoile3);
+	  Etoile etoile4(282, 50+rand()%100);
+	  this->etoiles.push_back(etoile4);
+	  Etoile etoile5(314, 50+rand()%100);
+	  this->etoiles.push_back(etoile5);
+
+	  // Création des trois nuages.
+	  Nuage nuage1(346, 50);
+	  this->nuages.push_back(nuage1);
+	  Nuage nuage2(346, 100);
+	  this->nuages.push_back(nuage2);
+	  Nuage nuage3(346, 150);
+	  this->nuages.push_back(nuage3);
 	}
 	
 	int getPoints() {return this->points;}
@@ -54,7 +68,10 @@ class Scene {
     void afficherScene(sf::RenderWindow& window) {
 		
 	  // On parcours l'ensemble du vecteur pour afficher tous les obstacles.
-	  for (int i=0 ; i<obstacles.size() ; i++) window.draw(this->obstacles[i]);
+	  for (int i=0 ; i<this->obstacles.size() ; i++) window.draw(this->obstacles[i]);
+	  
+	  // On parcourt l'ensemble du vecteur pour afficher tous les nuages.
+	  for (int i=0 ; i<this->nuages.size() ; i++) this->nuages[i].afficherNuage(window);
 	  
 	  // On parcours l'ensemble de la liste pour afficher toutes les étoiles.
 	  std::list<Etoile>::iterator it;
