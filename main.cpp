@@ -6,7 +6,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 // Our own classes
-#include "animator.h"
+#include "joueur.h"
+#include "scene.h"
 
 // SFML (Simple and Fast Multimedia Library) est un cadriciel ("framework") léger pour produire des dessins graphiques (essentiellement en 2D) en C++. Voir : https://www.sfml-dev.org/
 
@@ -26,32 +27,26 @@ int main()
   font.loadFromFile("fonts/Roman SD.ttf");
   sf::Text text("SFML works!", font);
   text.setCharacterSize(40);
-  text.setFillColor(sf::Color::White);
+  text.setFillColor(sf::Color::Black);
   text.setStyle(sf::Text::Bold);
   text.setPosition(0,0);
 
-  // Création de l'objet contenant le "sprite"
-  Animator player;
-  player.addFrame("sprites/sprite_1.png");
-  player.addFrame("sprites/sprite_2.png");
-  player.addFrame("sprites/sprite_3.png");
-  sf::Sprite sprite;
-  sprite.setPosition(0,50);
+  // Création de la scène avec laquelle le joueur peut interagir.
+  Scene scene;
+
+  // Création de l'objet joueur gérant les lutins et les déplacements.
+  Joueur joueur1(&scene);
 
   // Création du cercle.
   sf::CircleShape un_cercle(10);
   un_cercle.setFillColor(sf::Color(255, 0, 255));
 
-  // Création du rectangle. 
-  sf::RectangleShape carre(sf::Vector2<float>(20, 20));
-  carre.setFillColor(sf::Color(255, 0, 0));
-  int position_x = 0;
-  int position_y = 0;
-  carre.setPosition(position_x, position_y);
-
   window.setKeyRepeatEnabled(false);
 
-  const int step = 5;
+  bool w_pressed = false;
+  bool a_pressed = false;
+  bool s_pressed = false;
+  bool d_pressed = false;
 
   // Boucle qui tourne tant que la fenête est ouverte. Cette boucle va vérifier si des événements ont eu lieu dans la fenêtre (ex.: clic de souris).
   while (window.isOpen())
@@ -81,46 +76,42 @@ int main()
         }
         case sf::Event::KeyPressed:
         {
-          if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            position_y -= step;
-          }
-          else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            position_y += step;
-          }
-          else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            position_x -= step;
-            sprite.setTexture(player.getPreviousFrame());
-          }
-          else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-            position_x += step;
-            sprite.setTexture(player.getNextFrame());
-          }
+          if (evenement.key.code == sf::Keyboard::W) w_pressed = true;
+          else if (evenement.key.code == sf::Keyboard::A) a_pressed = true;
+          else if (evenement.key.code == sf::Keyboard::S) s_pressed = true;
+          else if (evenement.key.code == sf::Keyboard::D) d_pressed = true;
           break;
         }
+        case sf::Event::KeyReleased:
+        {
+          if (evenement.key.code == sf::Keyboard::W) w_pressed = false;
+          else if (evenement.key.code == sf::Keyboard::A) a_pressed = false;
+          else if (evenement.key.code == sf::Keyboard::S) s_pressed = false;
+          else if (evenement.key.code == sf::Keyboard::D) d_pressed = false;		  
+		  break;
+		}
         default:
           break;
       };
     }
 
-    // Déplacement du carré, tout en vérifiant qu'il ne sort pas du cadre.
-    if (position_x < 0) position_x = 0;
-    else if (position_x >= 400) position_x = 399;
-    if (position_y < 0) position_y = 0;
-    else if (position_y >= 200) position_y = 199;
-    sprite.setPosition(position_x, position_y);
+	if(w_pressed) joueur1.deplacerHaut();
+	if(a_pressed) joueur1.deplacerGauche();
+	if(s_pressed) joueur1.deplacerBas();
+	if(d_pressed) joueur1.deplacerDroite();
 
     // RAFRAICHISSEMENT DE LA SCÈNE
     // On efface le contenu de la scène.
     window.clear(white_background);
     // On ajoute tous les éléments de la scène.
     window.draw(text);
-    window.draw(sprite);
-    window.draw(carre);
     window.draw(un_cercle);
+    window.draw(joueur1.getLutin());
+    scene.afficherScene(window);
     // On affiche la scène dans la fenêtre.
     window.display();
 
-    // Attends 0.05s
+    // Attends 0.05s. Ce délai est nécessaire sinon la boucle va trop vite.
     std::this_thread::sleep_for (std::chrono::milliseconds(50));
   }
 
