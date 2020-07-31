@@ -40,16 +40,52 @@ Il existe plusieurs outils permettant de gérer cette configuration. Un des plus
  * Apache Ant : populaire pour les applications Java,
  * Rake : pour les applications en langage Ruby.
 
-Un Makefile est un fichier qui définit des suites de commandes à exécuter selon une situation donnée. Le langage de programmation du Makefile est très riche, mais aussi très difficile à lire et à comprendre. Sans entrer dans les (très nombreux) détails, voici ce qu'il permet de faire : 
+Un Makefile est un fichier qui définit des suites de commandes à exécuter selon une situation donnée. Le langage de programmation du Makefile est très riche, mais aussi très difficile à lire et à comprendre. Sans entrer dans les (très nombreux) détails, voici un exemple d'un Makefile partiel : 
 
-TODO continuer 
+`main.o: main.cpp main.h
+	gcc -o main.o -c main.cpp`
+
+Où : 
+
+ * "main.o" : La cible, ce que la commande devrait produire.
+ * 'main.cpp main.h" : Les fichiers requis pour que les commandes suivantes puissent fonctionner. Si ces fichiers n'existent pas, Make va essayer de trouver une cible capable de les produire. 
+ * L'espace entre le bord gauche et le "gcc ..." doit absolument être un caractère de tabulation. Attention ! Certains étuditeurs de texte remplacent automatiquement le caractère de tabulation par des espaces ...
+ * "gcc -o main.o -c main.cc" : La commande à exécuter si Make essaie d'exécuter la cible et que les fichiers requis sont présents. Notez qu'il n'y a ici qu'une seulement commande, mais qu'il est possible d'en mettre autant qu'on veut. Chaque commande doit être sur sa ligne, séparées du bord gauche par un caractère de tabulation.
+
+En tapant simplement `make` dans l'invite de commandes, Make va lire le fichier Makefile dans le répertoire courant, et exécuter la première cible du fichier. Si on veut exécuter une commande particulière, on peut le faire en spécifiant la cible, comme par exemple en tapant `make main.o`
 
 # Boucle d'événements
 
+La plupart des cadriciels supportant un GUI (Graphical User Interface, ou interface graphique) ont besoin d'une boucle d'événements. Cette boucle tourne continuellement jusqu'à ce que le programme se termine. L'objectif de cette boucle est d'attendre jusqu'à ce que la personne utilisatrice fasse une action (ex.: taper sur une touche du clavier, bouger la souris, cliquer un bouton de la souris). Cette action de la personne utilisatrice produit typiquement un objet de type événement, qui contient les détails de l'événement qui s'est produit (ex.: quelle touche du clavier à été tapée, la souris s'est déplacée de tel endroit à tel endroit, le clic de souris a utilisé tel bouton, et a été cliqué à tel endroit). 
+
+À partir de l'événement reçu, il est alors possible d'exécuter le code approprié pour le traiter. Par exemple, l'événement indique qu'il s'agit du clic du bouton gauche de la souris, et que ce clic a eu lieu à la coordonnée (x=30, y=50), ce qui correspond à un point à l'intérieur du bouton "Soumettre" de l'interface graphique. On sait donc qu'on doit exécuter le code correspondant à ce bouton.
+
+# Système de coordonnées
+
+Typiquement, les cadriciels de GUI utilisent le coin en haut à gauche comme origine (x=0, y=0) du système de coordonnées. Ainsi, plus la valeur de x augmente, et plus on se dirige vers la droite, tandis que plus la valeur de y augmente, et plus on se dirige vers le bas.
+
 # Détection de collisions
+
+L'ensemble de l'interface graphique est souvent appelée la "scène". Un élément dans la scène occupe un certain espace, qu'on nomme typiquement en anglais la "bounding box". Cette "bounding box" est importante car c'est ce qui permet d'évaluer si deux éléments entrent en collision ensemble, ou si un clic de souris a lieu à l'intérieur de cette boîte ou non.
+
+Tous les objets ont une coordonnée, mais celle-ci n'est qu'un point. Si on veut déterminer si deux objets entrent en collision, ce n'est pas suffisant de déterminer si ces deux coordonnées sont identiques. Il faut déterminer si la "bounding box" du premier objet rencontrer la "bounding box" du deuxième objet.
+
+La détection des collisions demande donc des calculs plus complexes. 
 
 # Autres détails techniques 
 
-Utilisation de références pour éviter des copies inutiles qui semblent se faire imparfaitement anyway. 
-fichiers binaires dans le Git
+## Utilisation de références
+
+Notez que les objets passés dans les méthodes sont généralement passés par référence. Il y a deux raisons à cela : 
+
+ * Pour éviter de faire des copies pour rien. Certains de ces objets peuvent être relativement volumineux car ils contiennent des images. La performance du logiciel est importante ici, car sinon la boucle d'événements pourrait être ralenties, ce qui causerait des délais de la mise-à-jour de la scène.
+ * Parce que la copie de certains éléments de SFML ne se fait pas bien. Une copie d'un "sf::Sprite" par exemple, ne fais pas la copie de la "sf::Texture" chargée. Donc le lutin ("sprirte") perd son image. Oups !
+
+## Fichiers binaires dans le dépôt Git
+
+Tel qu'expliqué durant le cours, ce n'est pas une bonne idée de mettre des fichiers binaires dans le dépôt Git. Dans ce cas-ci, j'ai décidé de les mettre quand même parce que :
+
+ * Je n'ai pas l'intention de changer ces fichiers souvents,
+ * Il n'y en a pas beaucoup et ils ne sont pas très gros,
+ * Je travaille seul, donc il n'y a pas de risque de conflit sur ces fichiers.
  
