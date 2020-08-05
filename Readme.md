@@ -28,7 +28,7 @@ Le cadriciel SFML n'est pas utilisé pour des jeux commerciaux complexes, du moi
 # Structure du projet
 
 TODO classes, etc.
-Pas sûr de la structure utilisée
+Pas sûr de la structure utilisée - regenererEtoile, séparation Joueur/Scène.
 
 # Compilation et Makefile
 
@@ -71,6 +71,10 @@ L'ensemble de l'interface graphique est souvent appelée la "scène". Un éléme
 Tous les objets ont une coordonnée, mais celle-ci n'est qu'un point. Si on veut déterminer si deux objets entrent en collision, ce n'est pas suffisant de déterminer si ces deux coordonnées sont identiques. Il faut déterminer si la "bounding box" du premier objet rencontrer la "bounding box" du deuxième objet.
 
 La détection des collisions demande donc des calculs plus complexes. 
+
+# KeyPress et KeyReleased
+
+La plupart des TODO finir
 
 # Autres détails techniques 
 

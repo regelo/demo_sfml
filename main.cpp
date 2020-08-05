@@ -37,11 +37,7 @@ int main()
   // Création de l'objet joueur gérant les lutins et les déplacements.
   Joueur joueur1(&scene, 50, 50);
 
-  // Création du cercle.
-  sf::CircleShape un_cercle(10);
-  un_cercle.setFillColor(sf::Color(255, 0, 255));
-
-  window.setKeyRepeatEnabled(false);
+  //window.setKeyRepeatEnabled(false);
 
   bool w_pressed = false;
   bool a_pressed = false;
@@ -59,19 +55,6 @@ int main()
         case sf::Event::Closed:
         {
           window.close();
-          break;
-        }
-        case sf::Event::MouseButtonPressed:
-        { 
-          if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // Affiche un message dans la console.
-            sf::Vector2<int> position_dans_la_fenetre = sf::Mouse::getPosition(window);
-            int x = position_dans_la_fenetre.x;
-            int y = position_dans_la_fenetre.y; 
-            std::cout << "Clic du bouton gauche au " << x << ", " << y << std::endl;
-            // Déplace le cercle à la position.
-            un_cercle.setPosition(x, y);
-          }
           break;
         }
         case sf::Event::KeyPressed:
@@ -110,7 +93,6 @@ int main()
     window.clear(white_background);
     // On ajoute tous les éléments de la scène.
     window.draw(text);
-    window.draw(un_cercle);
     window.draw(joueur1.getLutin());
     scene.afficherScene(window);
     // On affiche la scène dans la fenêtre.

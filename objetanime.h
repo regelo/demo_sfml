@@ -21,7 +21,8 @@ class ObjetAnime {
 	  this->lutin.setTexture(images.getImageCourante());
 	  return this->lutin;
 	}
-
+	
+	int getPositionX() {return this->position_x;}
 };
 
 #endif
