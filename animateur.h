@@ -15,37 +15,20 @@ class Animateur {
     std::vector<sf::Texture> images;
     int image_courante = 0;
   public:
-    void ajouterImage(std::string nom_fichier) {
-	  sf::Texture image;
-	  image.loadFromFile(nom_fichier);
-	  
-	  this->images.push_back(image);
-	}
-	
-    sf::Texture& getImagePrecedente() {
-      if (image_courante == 0) image_courante = this->images.size()-1;
-      else image_courante--;
-      
-      return this->images[image_courante];
-	}
-		
-    sf::Texture& getImageCourante() {
-      return this->images[image_courante];
-    }
-    
-	sf::Texture& getImageSuivante() {
-      if (image_courante == this->images.size()-1) image_courante = 0;
-      else image_courante++;
-      
-      return this->images[image_courante];
-	}
+    // Retourne la texture courante de l'animateur. Notez que la méthode retourne une référence constante, donc une référence vers un objet dont on ne peut pas changer les attributs. 
+    const sf::Texture& getImageCourante() const;
 
-	sf::Texture& getImageIndex(int index) {
-	  if (index < 0 || index >= this->images.size()) this->image_courante = 0;  
-	  else this->image_courante = index;
-	  
-	  return this->images[this->image_courante];
-	}
+    // Ajoute une image au vecteur des textures.
+    void ajouterImage(std::string nom_fichier);
+
+    // L'image courante devient l'image précédente. Celle-ci est retournée. Notez que la méthode retourne une référence constante, donc une référence vers un objet dont on ne peut pas changer les attributs.
+    const sf::Texture& assignerImagePrecedente();
+
+    // L'image courante devient l'image suivante. Celle-ci est retournée. Notez que la méthode retourne une référence constante, donc une référence vers un objet dont on ne peut pas changer les attributs.
+    const sf::Texture& assignerImageSuivante();
+
+    // L'image courante devient l'image spécifiée dans l'index. Celle-ci est retournée. Si l'index est invalide, on retourne la première image. S'il n'y a aucune image, cette méthode peut donc causer un crash. Notez que la méthode retourne une référence constante, donc une référence vers un objet dont on ne peut pas changer les attributs.
+    const sf::Texture& assignerImageIndex(int index);
 };
 
 #endif

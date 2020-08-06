@@ -38,7 +38,7 @@ class Joueur : public ObjetAnime {
 		  this->lutin.setPosition(this->position_x, this->position_y);
       
 	      // Passe à l'image précédente du lutin.
-	      this->lutin.setTexture(this->images.getImagePrecedente());
+	      this->lutin.setTexture(this->images.assignerImagePrecedente());
 	  }	
 	}
 	
@@ -55,7 +55,7 @@ class Joueur : public ObjetAnime {
 		  this->lutin.setPosition(this->position_x, this->position_y);
       
 	      // Passe à l'image suivante du lutin.
-	      this->lutin.setTexture(this->images.getImageSuivante());
+	      this->lutin.setTexture(this->images.assignerImageSuivante());
 	  }
 	}
 	
@@ -72,7 +72,7 @@ class Joueur : public ObjetAnime {
 		  this->lutin.setPosition(this->position_x, this->position_y);
       
 	      // Passe à l'image suivante du lutin.
-	      this->lutin.setTexture(this->images.getImageSuivante());
+	      this->lutin.setTexture(this->images.assignerImageSuivante());
 	  }	
 	}
 	
@@ -89,7 +89,7 @@ class Joueur : public ObjetAnime {
 		  this->lutin.setPosition(this->position_x, this->position_y);
       
 	      // Passe à l'image précédente du lutin.
-	      this->lutin.setTexture(this->images.getImagePrecedente());
+	      this->lutin.setTexture(this->images.assignerImagePrecedente());
 	  }
 	}
 	

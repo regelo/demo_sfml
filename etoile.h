@@ -14,7 +14,7 @@ class Etoile : public ObjetAnime {
     }
     
     void afficherEtoile(sf::RenderWindow& fenetre) {
-		this->lutin.setTexture(this->images.getImageSuivante());
+		this->lutin.setTexture(this->images.assignerImageSuivante());
 		fenetre.draw(this->lutin);
 	}
 };
