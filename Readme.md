@@ -28,7 +28,7 @@ Le cadriciel SFML n'est pas utilisé pour des jeux commerciaux complexes, du moi
 # Structure du projet
 
 TODO classes, etc.
-Pas sûr de la structure utilisée - regenererEtoile, séparation Joueur/Scène.
+Pas sûr de la structure utilisée - regenererEtoile, séparation Joueur/Scène, forward declaration
 
 # Compilation et Makefile
 

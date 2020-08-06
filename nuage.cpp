@@ -3,11 +3,11 @@
 // FONCTIONS PRIVÉES
 
 void Nuage::deplacerNuage(Scene& scene, int joueur_x, int joueur_y) {
-		int decision = rand()%15;
-		if (decision<5) {
+		int decision = rand()%20;
+		if (decision<10) {
 		  // On garde la même direction, donc on ne change rien.
 		}
-		else if (decision<7) {
+		else if (decision<12) {
 		  // On se dirige vers le joueur, horizontalement.
 		  if (this->position_x < joueur_x) {
 		    this->orientation_courante = DROITE;
@@ -17,37 +17,37 @@ void Nuage::deplacerNuage(Scene& scene, int joueur_x, int joueur_y) {
 		    this->lutin.setTexture(this->images.getImageIndex(GAUCHE));
 		  }
 		}
-		else if (decision<10) {
+		else if (decision<15) {
 		  // On se dirige vers le joueur, verticalement.
 		  if (this->position_y < joueur_y) {
-		    this->orientation_courante = HAUT;
-		    this->lutin.setTexture(this->images.getImageIndex(HAUT));
-		  } else {
 		    this->orientation_courante = BAS;
 		    this->lutin.setTexture(this->images.getImageIndex(BAS));
+		  } else {
+		    this->orientation_courante = HAUT;
+		    this->lutin.setTexture(this->images.getImageIndex(HAUT));
 		  }
 		}
-		else if (decision=10) {
+		else if (decision==15) {
 		  // On se dirige vers le milieu
 		  this->orientation_courante = MILIEU;
 		  this->lutin.setTexture(this->images.getImageIndex(MILIEU));
 		}
-		else if (decision=11) {
+		else if (decision==16) {
 		  // On se dirige vers la gauche
 		  this->orientation_courante = GAUCHE;
 		  this->lutin.setTexture(this->images.getImageIndex(GAUCHE));
 		}
-		else if (decision=12) {
+		else if (decision==17) {
 		  // On se dirige vers la droite
 		  this->orientation_courante = DROITE;
 		  this->lutin.setTexture(this->images.getImageIndex(DROITE));
 		}
-		else if (decision=13) {
+		else if (decision==18) {
 		  // On se dirige vers le haut
 		  this->orientation_courante = HAUT;
 		  this->lutin.setTexture(this->images.getImageIndex(HAUT));
 		}
-		else if (decision=14) {
+		else if (decision==19) {
 		  // On se dirige vers le bas
 		  this->orientation_courante = BAS;
 		  this->lutin.setTexture(this->images.getImageIndex(BAS));

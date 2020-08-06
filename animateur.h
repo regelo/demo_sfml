@@ -6,6 +6,7 @@
 #include "SFML/Window.hpp"
 
 // Librairies standard
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -38,10 +39,12 @@ class Animateur {
       
       return this->images[image_courante];
 	}
-	
+
 	sf::Texture& getImageIndex(int index) {
-	  if (index < 0 || index >= this->images.size()) return this->images[0];
-	  return this->images[index];
+	  if (index < 0 || index >= this->images.size()) this->image_courante = 0;  
+	  else this->image_courante = index;
+	  
+	  return this->images[this->image_courante];
 	}
 };
 

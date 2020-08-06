@@ -95,16 +95,24 @@ class Scene {
 	        (joueur_y <= nuage_y+16)
 	      ) {
 	           this->partie_terminee = true;
-	           std::cout << "Partie terminée !" << std::endl;
-       }
-
-      // Vérifier collision avec un obstacle.
+       }      
       
       // Vérifier collision avec les bordures du jeu.
 	  if (nuage_x >= 350) return true;
 	  if (nuage_x <= 10) return true;
 	  if (nuage_y >= 150) return true;
 	  if (nuage_y <= 10) return true;
+
+      // Vérifier collision avec un obstacle.		
+	  for (int i=0 ; i<obstacles.size() ; i++) {
+	  sf::Rect<float> rectangle = this->obstacles[i].getGlobalBounds();
+			
+	    if (  (nuage_x >= rectangle.left-16) && 
+			  (nuage_x <= rectangle.left-16+rectangle.width) && 
+			  (nuage_y >= rectangle.top-16) && 
+			  (nuage_y <= rectangle.top-16+rectangle.height)
+			   ) return true;
+	  }
 		
 	  return false;
 	}

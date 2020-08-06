@@ -10,11 +10,11 @@ class Nuage;
 class Nuage : public ObjetAnime {
   private:
     enum Orientation {
-	  MILIEU,
-	  GAUCHE,
-	  DROITE,
-	  HAUT,
-	  BAS
+	  MILIEU=0,
+	  GAUCHE=1,
+	  DROITE=2,
+	  HAUT=3,
+	  BAS=4
 	};
 	Orientation orientation_courante = GAUCHE;
 	int vitesse = 2;
@@ -35,9 +35,9 @@ class Nuage : public ObjetAnime {
 	
   private:
     // Cette fonction privée contient l'"intelligence artificielle" du nuage. Le nuage a : 
-    //    33% de chance de garder la même direction,
-    //    33% de chance de se diriger vers le joueur horizontalement ou verticalement,
-    //    33% de chance d'aller dans n'importe quelle direction.
+    //    50% de chance de garder la même direction,
+    //    25% de chance de se diriger vers le joueur horizontalement ou verticalement,
+    //    25% de chance d'aller dans n'importe quelle direction.
     // Notez que "milieu" est une direction, et fait que le nuage ne bouge pas. 
 	void deplacerNuage(Scene& scene, int joueur_x, int joueur_y);
 };
