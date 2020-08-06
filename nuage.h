@@ -1,7 +1,11 @@
 #ifndef __NUAGE_H__
 #define __NUAGE_H__
 
+// Cette "forward declaration" de la classe est nécessaire à cause de dépendances cycliques entre "nuage.h" et "scene.h".
+class Nuage;
+
 #include "objetanime.h"
+#include "scene.h"
 
 class Nuage : public ObjetAnime {
   private:
@@ -13,7 +17,7 @@ class Nuage : public ObjetAnime {
 	  BAS
 	};
 	Orientation orientation_courante = GAUCHE;
-	int vitesse = 1;
+	int vitesse = 2;
   public:
     Nuage(int x, int y) : ObjetAnime(x, y) {
 	  // Les images sont ajoutées dans l'ordre, afin que index 0 soit milieu, index 1 soit gauche, etc. tel que l'enum le décrit.
@@ -24,8 +28,8 @@ class Nuage : public ObjetAnime {
 	  this->images.ajouterImage("sprites/nuage_bas.png");
 	}
 	
-	void afficherNuage(sf::RenderWindow& fenetre) {
-		deplacerNuage();
+	void afficherNuage(sf::RenderWindow& fenetre, Scene& scene, int joueur_x, int joueur_y) {
+		deplacerNuage(scene, joueur_x, joueur_y);
 		fenetre.draw(this->getLutin());
 	}
 	
@@ -35,33 +39,7 @@ class Nuage : public ObjetAnime {
     //    33% de chance de se diriger vers le joueur horizontalement ou verticalement,
     //    33% de chance d'aller dans n'importe quelle direction.
     // Notez que "milieu" est une direction, et fait que le nuage ne bouge pas. 
-	void deplacerNuage() {
-		int decision = rand()%15;
-		if (decision<5) {
-		  // On garde la même direction.
-		}
-		else if (decision<7) {
-		  // On se dirige vers le joueur, horizontalement.
-		}
-		else if (decision<10) {
-		  // On se dirige vers le joueur, verticalement.
-		}
-		else if (decision=10) {
-		  // On se dirige vers le milieu
-		}
-		else if (decision=11) {
-		  // On se dirige vers la gauche
-		}
-		else if (decision=12) {
-		  // On se dirige vers la droite
-		}
-		else if (decision=13) {
-		  // On se dirige vers le haut
-		}
-		else if (decision=14) {
-		  // On se dirige vers le bas
-		}
-	}
+	void deplacerNuage(Scene& scene, int joueur_x, int joueur_y);
 };
 
 #endif

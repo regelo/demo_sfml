@@ -1,6 +1,11 @@
 #ifndef __ANIMATEUR_H__
 #define __ANIMATEUR_H__
 
+// SFML libraries
+#include "SFML/Graphics.hpp"
+#include "SFML/Window.hpp"
+
+// Librairies standard
 #include <vector>
 #include <string>
 

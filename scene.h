@@ -3,8 +3,12 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 #include <list>
 #include <vector>
+
+// Cette "forward declaration" de la classe est nécessaire à cause de dépendances cycliques entre "nuage.h" et "scene.h".
+class Scene;
 
 #include "etoile.h"
 #include "nuage.h"
@@ -21,61 +25,19 @@ class Scene {
 	// La texture ne peut pas être une variable locale, car lorsque la variable est détruite, l'affichage du lutin ne fonctionne pas correctement. 
 	sf::Texture image_obstacle;
 	
+	// Points accumulés par le joueur.
 	int points = 0;
 	
+	// Indicateur si la partie est terminée ou non.
+	bool partie_terminee = false;
+	
   public:
-    Scene() {
-	  // Création des obstacles.
-      this->image_obstacle.loadFromFile("sprites/roche.png");
-      
-      // Initialisation du générateur de nombres aléatoires avec le temps actuel.
-      srand(time(NULL));
-      
-      // Création de trois obstacles à x=150, x=200, x=250 avec une valeur aléatoire entre 50 et 149 pour les y.
-      for (int i=0 ; i<3 ; i++){
-	    int x = 150 + i*50;
-	    int y = 50 + rand()%100;
-	    sf::Sprite obstacle;
-        obstacle.setTexture(this->image_obstacle);
-        obstacle.setPosition(x, y);
-	    this->obstacles.push_back(obstacle);
-	  }
-	  
-	  // Création de cinq étoiles à x=18, x=82, x=118, x=282 et x=314, avec une valeur aléatoire entre 50 et 149 pour les y.
-	  Etoile* etoile1 = new Etoile(18, 50+rand()%100);
-	  this->etoiles[0] = etoile1;
-	  Etoile* etoile2 = new Etoile(82, 50+rand()%100);
-	  this->etoiles[1] = etoile2;
-	  Etoile* etoile3 = new Etoile(118, 50+rand()%100);
-	  this->etoiles[2] = etoile3;
-	  Etoile* etoile4 = new Etoile(282, 50+rand()%100);
-	  this->etoiles[3] = etoile4;
-	  Etoile* etoile5 = new Etoile(314, 50+rand()%100);
-	  this->etoiles[4] = etoile5;
-
-	  // Création des trois nuages.
-	  Nuage nuage1(346, 50);
-	  this->nuages.push_back(nuage1);
-	  Nuage nuage2(346, 100);
-	  this->nuages.push_back(nuage2);
-	  Nuage nuage3(346, 150);
-	  this->nuages.push_back(nuage3);
-	}
+    Scene();
 	
 	int getPoints() {return this->points;}
 	
 	// Afficher le contenu de la scène
-    void afficherScene(sf::RenderWindow& window) {
-		
-	  // On parcours l'ensemble du vecteur pour afficher tous les obstacles.
-	  for (int i=0 ; i<this->obstacles.size() ; i++) window.draw(this->obstacles[i]);
-	  
-	  // On parcourt l'ensemble du vecteur pour afficher tous les nuages.
-	  for (int i=0 ; i<this->nuages.size() ; i++) this->nuages[i].afficherNuage(window);
-	  
-	  // On parcours l'ensemble de la liste pour afficher toutes les étoiles qui existent encore.
-	  for (int i=0 ; i<5 ; i++) if (this->etoiles[i] != NULL) this->etoiles[i]->afficherEtoile(window);
-    }
+    void afficherScene(sf::RenderWindow& window, int joueur_x, int joueur_y);
     
     // Vérifier si une position entre en collision avec des objets de la scène.
     bool verifierCollision(int position_x, int position_y) {
@@ -120,6 +82,31 @@ class Scene {
 			   ) return true;
 		}
 		return false;
+	}
+
+    bool getPartieTerminee() { return this->partie_terminee; }
+
+    bool verifierCollisionNuage(int nuage_x, int nuage_y, int joueur_x, int joueur_y) {
+	  
+	  // Vérifier collision avec le joueur.
+	  if (  (joueur_x >= nuage_x-16) &&
+	        (joueur_x <= nuage_x+16) &&
+	        (joueur_y >= nuage_y-16) &&
+	        (joueur_y <= nuage_y+16)
+	      ) {
+	           this->partie_terminee = true;
+	           std::cout << "Partie terminée !" << std::endl;
+       }
+
+      // Vérifier collision avec un obstacle.
+      
+      // Vérifier collision avec les bordures du jeu.
+	  if (nuage_x >= 350) return true;
+	  if (nuage_x <= 10) return true;
+	  if (nuage_y >= 150) return true;
+	  if (nuage_y <= 10) return true;
+		
+	  return false;
 	}
 
   private:

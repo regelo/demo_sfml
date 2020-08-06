@@ -23,6 +23,7 @@ class ObjetAnime {
 	}
 	
 	int getPositionX() {return this->position_x;}
+	int getPositionY() {return this->position_y;}	
 };
 
 #endif

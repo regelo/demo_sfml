@@ -45,7 +45,7 @@ int main()
   bool d_pressed = false;
 
   // Boucle qui tourne tant que la fenête est ouverte. Cette boucle va vérifier si des événements ont eu lieu dans la fenêtre (ex.: clic de souris).
-  while (window.isOpen())
+  while (window.isOpen() && !scene.getPartieTerminee())
   {
 		// On regarde si un ou plusieurs événements sont survenus depuis la dernière fois qu'on a vérifié.
     sf::Event evenement;
@@ -94,7 +94,11 @@ int main()
     // On ajoute tous les éléments de la scène.
     window.draw(text);
     window.draw(joueur1.getLutin());
-    scene.afficherScene(window);
+    
+    int joueur_x = joueur1.getPositionX();
+    int joueur_y = joueur1.getPositionY();
+    
+    scene.afficherScene(window, joueur_x, joueur_y);
     // On affiche la scène dans la fenêtre.
     window.display();
 
