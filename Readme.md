@@ -27,8 +27,59 @@ Le cadriciel SFML n'est pas utilisé pour des jeux commerciaux complexes, du moi
 
 # Structure du projet
 
-TODO classes, etc.
-Pas sûr de la structure utilisée - regenererEtoile, séparation Joueur/Scène, forward declaration
+Le code possède six classes, dont une est une classe-mère (ObjetAnime) et trois sont des classes-filles (Joueur, Etoile, Nuage).
+
+## Classe Animateur
+
+Cette classe sert à contenir les images servant à l'animation des lutins ("sprites"). Les objets de cette classe forment un attribut pour l'objet ObjetAnime.
+
+## Classe ObjetAnime
+
+Cette classe-mère contient les attributs et méthodes communs pour tous les objets qui ont une animation. 
+
+## Classe Etoile
+
+Cette classe-fille gère le fonctionnement d'une étoile. Le but du jeu est que le joueur obtienne des étoiles, qui lui donne des points.
+
+## Classe Joueur
+
+Cette classe-fille gère le fonctionnement d'un joueur. La classe gère le déplacement du joueur et vérifie avec les autres objets de la scène si jamais celui-ci entre en collision avec un obstacle.
+
+## Classe Nuage
+
+Cette classe-fille gère le fonctionnement d'un nuage. Le nuage est un ennemi que le joueur doit éviter sinon la partie se termine.
+
+## Classe Scene
+
+Cette classe contient presque tous les éléments qui doivent être affichés à l'écran, sauf le joueur et le texte. Son objectif est de regrouper tous les affichages, mais ses responsabilités débordent en partie sur la gestion du jeu lui-même.
+
+# Problèmes de qualité
+
+La structure actuelle du code n'est pas optimale et il y aurait place à l'amélioration. 
+
+## Design de la classe Scene
+
+Pour le moment la Scene contient tous les éléments affichés sauf le joueur et le texte. Il faudrait peut-être mettre ces objets dans la scene afin d'être plus cohérent.
+
+Il y aurait aussi matière à créer une autre classe appelée Jeu pour séparer l'affichage de la gestion du jeu lui-même (points, texte, partie terminée, collisions, etc.). 
+
+## Choix du conteneur des Etoile
+
+Les Etoile sont conservées dans la Scene dans un tableau statique de pointeurs. J'ai utilisé ce conteneur car c'est ce qui me semblait plus facile initialement pour la fonction privée "regenererEtoile". La complexité de la fonction semble indiquer que mon choix n'était pas idéal. 
+
+Il y a sûrement un moyen d'améliorer cette approche.
+
+## Relation entre Scene et les objets Etoile, Joueur et Nuage
+
+La Scene fait du travail qui serait peut-être plus approprié de faire directement dans les objets. Il y aurait peut-être moyen de déplacer du code d'une classe à une autre. 
+
+Pas sûr de la structure utilisée - ,  forward declaration, scene->objets
+
+## Nuage et Scene et les "forward declaration"
+
+Avec la structure actuelle, il y a une dépendance cyclique entre Nuage et Scene, c'est-à-dire que la classe Nuage possède un #include "scene.h" et que la classe Scene possède un #include "nuage.h". Cela nous force à faire des "forward declaration". Une "forward declaration" est similaire à un prototype de fonction. C'est une manière d'indiquer que la classe existe avant de la définir au complet.  
+
+Une révision de la structure nous permettrait peut-être d'éviter ces dépendances cycliques et donc de faire des "forward declaration". Ceci dit, ce n'est peut-être pas possible. Il est quand même fréquent d'avoir des dépendances cycliques dans un programme. 
 
 # Compilation et Makefile
 
@@ -74,7 +125,9 @@ La détection des collisions demande donc des calculs plus complexes.
 
 # KeyPress et KeyReleased
 
-La plupart des TODO finir
+La plupart des cadriciels graphiques détectent quand une touche est appuyée et quand elle est relâchée. Dans la plupart des cas, on ne saisit que lorsque la touche est initialement appuyée : que la touche soit appuyée brièvement ou pour 15 secondes, cela ne résulte qu'en un seul événement.
+
+Pour le jeu, ce ne serait pas pratique. On veut que si la touche 'D' reste appuyée pendant 5 secondes, que le joueur se déplace vers la droite pendant 5 secondes. On utilise donc des valeurs booléennes, qui sont mises à "true" lorsque la touche est appuyée et à "false" lorsque la touche est relâchée.  
 
 # Autres détails techniques 
 
