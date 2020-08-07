@@ -10,20 +10,13 @@ class ObjetAnime {
     int position_x;
     int position_y;
   public:
-    ObjetAnime(int x, int y) {
-	  // Position de départ
-	  this->position_x = x;
-	  this->position_y = y;
-	  this->lutin.setPosition(this->position_x, this->position_y);
-    }
+    ObjetAnime(int x, int y);
 
-	sf::Sprite& getLutin() {
-	  this->lutin.setTexture(images.getImageCourante());
-	  return this->lutin;
-	}
-	
-	int getPositionX() {return this->position_x;}
-	int getPositionY() {return this->position_y;}	
+    int getPositionX();
+    int getPositionY();
+
+    // Cette méthode n'est pas un vrai "getter" car elle modifie le contenu de l'attribut "lutin".
+    sf::Sprite& obtenirLutin();
 };
 
 #endif
