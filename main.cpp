@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <Windows.h>
 // Librairies de SFML
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -108,7 +109,8 @@ int main()
       window.display();
 
       // On attends 0.05s. Ce délai est nécessaire sinon la boucle va trop vite. Cela définit donc un "tick" de 0.05s. Notez que si l'exécution du code d'une itération de la boucle prend trop de temps, ce "tick" peut être plus grand, ce qui va causer une forme de "lag".
-      std::this_thread::sleep_for (std::chrono::milliseconds(50));
+      //std::this_thread::sleep_for (std::chrono::milliseconds(50));
+      Sleep(50);
     }
     else
     {
