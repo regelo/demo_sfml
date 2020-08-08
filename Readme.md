@@ -1,11 +1,25 @@
 # Compilation et lancement du logiciel
 
-Si vous voulez seulement compiler et lancer le logiciel : 
+
+## Linux
+
+Pour compiler et lancer le logiciel sur Linux : 
 
  1. Ouvrez une invite de commande et déplacez vous à l'endroit où vous voulez que le projet se trouve,
  2. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
  3. Déplacez-vous dans le répertoire téléchargé,
  4. Compilez et lancez le logiciel avec la commande `make`
+
+## Windows
+
+Le logiciel a été programmé sur Linux et compile mieux sur cette plateforme. J'ai réussi à le compiler sur Windows, mais ça pourrait être plus compliqué pour vous. Pour compiler et lancer le logiciel sur Windows : 
+
+ 1. Il faut que vous ayiez installé et placé sur la variable d'environnement $PATH la dernière version du compilateur GCC de MinGW32. Ce que nous avons installé au début de la session est le compilateur MinGW64 de Winbuilds, qui est une vieille version de GCC qui ne pourra pas compiler les librairies de SFML. Nous allons donc faire un exécutable 32 bits au lieu d'un exécutable 64 bits, mais comme SFML nous offre encore des librairies 32 bits ça devrait fonctionner. Vous pouvez installer MinGW32 et sa version du compilateur GCC en allant au http://www.mingw.org/wiki/Getting_Started
+ 2. Ouvrez l'invite de commande du Git Bash et déplacez vous à l'endroit où vous voulez que le projet se trouve,
+ 3. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
+ 4. Déplacez-vous dans le répertoire téléchargé,
+ 5. Passez sur la branche appropriée avec `git checkout mingw32`,
+ 6. Compilez et lancez le logiciel avec la commande `./compile.bat`
 
 # Programmation C++ de jeux vidéos avec SFML
 
