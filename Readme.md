@@ -18,7 +18,7 @@ Le logiciel a été programmé sur Linux et compile mieux sur cette plateforme. 
  3. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
  4. Déplacez-vous dans le répertoire téléchargé,
  5. Passez sur la branche appropriée avec `git checkout mingw32`,
- 6. Compilez et lancez le logiciel avec la commande `./compile.bat` ``
+ 6. Compilez et lancez le logiciel avec la commande `./compile.bat`
 
 # Programmation C++ de jeux vidéos avec SFML
 
