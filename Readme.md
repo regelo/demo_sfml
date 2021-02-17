@@ -1,9 +1,20 @@
-# Compilation et lancement du logiciel
+# Lancement du petit jeu
+
+## Linux
+
+TODO
+
+## Windows
+
+TODO
+
+# Compilation à partir du code source
 
 ## Linux
 
 Pour compiler et lancer le logiciel sur Linux : 
 
+ 0. Dépendances : Vous devez avoir le compilateur GCC et l'outil Make installé sur votre ordinateur.
  1. Ouvrez une invite de commande et déplacez vous à l'endroit où vous voulez que le projet se trouve,
  2. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
  3. Déplacez-vous dans le répertoire téléchargé,
