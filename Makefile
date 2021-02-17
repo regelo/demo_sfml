@@ -3,13 +3,13 @@
 
 
 run: petitjeu
-	# Exécution du code en spécifiant d'abord une librairie. Les deux commandes doivent être sur la même ligne parce que Make exécute chaque ligne dans une invite de commande ("shell") différente.
-	export LD_LIBRARY_PATH=./SFML-2.5.1/lib; ./petitjeu
-
+	# Exécution du code.
+	./petitjeu
 
 petitjeu: main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o
 	# Édition de lien ("linking")
-	g++ -std=c++11 main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o -o petitjeu -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	# -Wl,-R est une option donnée au linker pour que l'exécutable se rappelle où se trouve sa librairie.
+	g++ -std=c++11 main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o -o petitjeu -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include -Wl,-RSFML-2.5.1/lib
 
 
 animateur.o: animateur.cpp animateur.h
