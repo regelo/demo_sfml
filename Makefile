@@ -1,49 +1,44 @@
-# Indique qu'une commande "make run" doit exécuter l'entrée "run" du Makefile même s'il existe un fichier appelé "run".
+
 .PHONY: run
 
+CC:= g++.exe
+LDFLAGS:= -static -static-libgcc -static-libstdc++ -Wl,-RSFML-2.5.1/lib
+CCFLAGS:= -std=c++11
+INCLUDES:= -ISFML-2.5.1/include
+LIBS:= -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system 
 
-run: petitjeu
-	# Exécution du code.
-	./petitjeu
+run: petitjeu.exe
+	petitjeu.exe
 
-petitjeu: main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o
-	# Édition de lien ("linking")
-	# -Wl,-R est une option donnée au linker pour que l'exécutable se rappelle où se trouve sa librairie.
-	g++ -std=c++11 main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o -o petitjeu -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include -Wl,-RSFML-2.5.1/lib
+petitjeu.exe: main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o
+	$(CC) $(LDFLAGS) main.o nuage.o scene.o etoile.o joueur.o animateur.o objetanime.o -o petitjeu.exe $(LIBS) 
 
 
 animateur.o: animateur.cpp animateur.h
-	# Compilation de animateur.cpp
-	g++ -std=c++11 -o animateur.o -c animateur.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o animateur.o -c animateur.cpp $(INCLUDES)
 
 joueur.o: joueur.cpp joueur.h animateur.h objetanime.h scene.h
-	# Compilation de joueur.cpp
-	g++ -std=c++11 -o joueur.o -c joueur.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o joueur.o -c joueur.cpp $(INCLUDES)
 
 etoile.o: etoile.cpp etoile.h animateur.h objetanime.h
-	# Compilation de etoile.cpp
-	g++ -std=c++11 -o etoile.o -c etoile.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o etoile.o -c etoile.cpp $(INCLUDES)
 
 main.o: main.cpp joueur.h scene.h
-	# Compilation du main.cpp
-	g++ -std=c++11 -c main.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o main.o -c main.cpp $(INCLUDES)
 
 nuage.o: nuage.cpp nuage.h scene.h objetanime.h
-	# Compilation de nuage.cpp
-	g++ -std=c++11 -c nuage.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o nuage.o -c nuage.cpp $(INCLUDES)
 
 objetanime.o: objetanime.cpp objetanime.h animateur.h
-	# Compilation de objetanime.cpp
-	g++ -std=c++11 -o objetanime.o -c objetanime.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -o objetanime.o -c objetanime.cpp $(INCLUDES)
 
 scene.o: scene.cpp scene.h etoile.h nuage.h
-	# Compilation de scene.cpp
-	g++ -std=c++11 -c scene.cpp -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system -ISFML-2.5.1/include
+	$(CC) $(CCFLAGS) -c scene.cpp $(INCLUDES)
 
 
 clean:
-    # Effacement des fichiers intermédiaires. Peut être appelé avec la commande "make clean".
-	rm -f *.o
+	del *.o
+	del *.exe
 
 
 
