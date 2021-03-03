@@ -2,6 +2,13 @@
 .PHONY: windows
 
 
+CC:= g++.exe
+LDFLAGS:= -static -static-libgcc -static-libstdc++ -Wl,-RSFML-2.5.1/lib
+CCFLAGS:= -std=c++11
+INCLUDES:= -ISFML-2.5.1/include
+LIBS:= -LSFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system 
+
+
 
 L_CC:= g++
 L_CCFLAGS:= -std=c++11
@@ -77,8 +84,6 @@ scene.o: scene.cpp scene.h etoile.h nuage.h
 linux_clean:
 	rm -f *.o
 	rm -f linux_petitjeu
-
-
 
 windows_clean:
 	del *.o
