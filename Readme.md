@@ -1,13 +1,3 @@
-# Lancement du petit jeu
-
-## Linux
-
-TODO
-
-## Windows
-
-TODO
-
 # Compilation à partir du code source
 
 ## Linux
@@ -18,24 +8,26 @@ Pour compiler et lancer le logiciel sur Linux :
  1. Ouvrez une invite de commande et déplacez vous à l'endroit où vous voulez que le projet se trouve,
  2. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
  3. Déplacez-vous dans le répertoire téléchargé,
- 4. Compilez et lancez le logiciel avec la commande `make`
+ 4. Compilez et lancez le logiciel avec la commande `make linux`
 
 ## Windows
 
 Le logiciel a été programmé sur Linux et compile mieux sur cette plateforme. J'ai réussi à le compiler sur Windows, mais ça pourrait être plus compliqué pour vous. Pour compiler et lancer le logiciel sur Windows : 
 
- 1. Il faut que vous ayiez installé et placé sur la variable d'environnement $PATH la dernière version du compilateur GCC de MinGW32. Ce que nous avons installé au début de la session est le compilateur MinGW64 de Winbuilds, qui est une vieille version de GCC qui ne pourra pas compiler les librairies de SFML. Nous allons donc faire un exécutable 32 bits au lieu d'un exécutable 64 bits, mais comme SFML nous offre encore des librairies 32 bits ça devrait fonctionner. Vous pouvez installer MinGW32 et sa version du compilateur GCC en allant au http://www.mingw.org/wiki/Getting_Started
- 2. Ouvrez l'invite de commande du Git Bash et déplacez vous à l'endroit où vous voulez que le projet se trouve,
- 3. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
- 4. Déplacez-vous dans le répertoire téléchargé,
- 5. Passez sur la branche appropriée avec `git checkout mingw32`,
- 6. Compilez et lancez le logiciel avec la commande `./compile.bat`
+ 1. Malheureusement, le compilateur TDM64 ne contient pas certaines librairies nécesaires pour que le code puisse être compilé. Il faut donc que vous installiez le _port_ de GCC de MinGW64. Le plus facile est d'utiliser l'outil MSYS2 pour faire le travail : https://www.msys2.org/#installation L'installateur fonctionne normalement assez bien.
+ 2. Ouvrez une invite de commande et assurez-vous que c'est bien le GCC de MinGW64 qui est exécuté et non le GCC de TDM64 en tapant la commande `g++.exe --version`
+ 3. Déplacez votre invite de commande dans le répertoire où vous voulez avoir le code.
+ 5. Téléchargez le contenu de GitHub avec `git clone https://github.com/regelo/demo_sfml.git`,
+ 6. Déplacez-vous dans le répertoire téléchargé,
+ 8. Compilez et lancez le logiciel avec la commande `mingw32-make windows`
 
 # Programmation C++ de jeux vidéos avec SFML
 
 SFML (Simple and Fast Multimedia Library)) est un cadriciel ("framework") pour la production d'applications graphiques. C'est un cadriciel de bas niveau, donc il ne contient pas d'éléments permettant de créer des contrôles (boutons, champs de texte, etc.). Si on veut avoir un bouton, il faut donc se le créer nous-mêmes.
 
-SFML n'offre pas non plus de fonctionalités pour faciliter la représentation d'éléments 3D. Il est donc plus approprié pour des applications 2D, comme des jeux utilisant des lutins ("sprites"). C'est donc un cadriciel limité, mais qui a l'avantage d'être simple à utiliser, à compiler, et à comprendre. L'idéal pour apprendre !
+SFML n'offre pas non plus de fonctionalités pour faciliter la représentation d'éléments 3D. Il est donc plus approprié pour des applications 2D, comme des jeux utilisant des lutins ("sprites"). C'est donc un cadriciel limité, mais qui a l'avantage d'être simple à utiliser, à compiler, et à comprendre.
+
+Les programmeurEs de jeux vidéos utilisent typiquement des cadriciels plus avancés, mais ça ne fait pas de tort de voir un peu ce qui se passe avec un cadriciel plus simple qui nous demande de tout faire à la main.
 
 ## SFML et programmation de jeux vidéos
 
